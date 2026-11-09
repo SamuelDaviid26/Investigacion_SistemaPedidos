@@ -28,9 +28,19 @@ namespace TodoApi.Controllers
             if (usuarioId == null)
                 return Unauthorized();
 
+            var platoSolicitado = solicitud.Plato.Trim();
+
+            var nombreAlimento = await _context.Alimentos
+                .Where(a => a.Nombre == platoSolicitado)
+                .Select(a => a.Nombre)
+                .SingleOrDefaultAsync();
+
+            if (nombreAlimento == null)
+                return BadRequest("El plato seleccionado no existe en el menú.");
+
             var pedido = new Pedido
             {
-                Plato = solicitud.Plato.Trim(),
+                Plato = nombreAlimento,
                 Cantidad = solicitud.Cantidad,
                 Observacion = solicitud.Observacion?.Trim(),
                 UserId = usuarioId
@@ -57,7 +67,9 @@ namespace TodoApi.Controllers
                 consulta = consulta.Where(p => p.UserId == usuarioId);
             }
 
-            var pedidos = await consulta.OrderBy(p => p.Id).ToListAsync();
+            var pedidos = await consulta
+                .OrderBy(p => p.Id)
+                .ToListAsync();
 
             return Ok(pedidos);
         }
