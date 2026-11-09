@@ -33,4 +33,16 @@ export class PedidosService {
       headers: { Authorization: `Bearer ${token}` }
     });
   }
+
+  cambiarEstado(
+    id: number,
+    nuevoEstado: 'EnPreparacion' | 'ListoParaRecoger',
+    token: string
+  ): Observable<Pedido> {
+    return this.http.patch<Pedido>(
+      `${this.url}/${id}/estado`,
+      { newStatus: nuevoEstado },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  }
 }

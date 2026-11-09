@@ -1,0 +1,62 @@
+<main class="pagina">
+    <header>
+        <h1>Pedidos de cocina</h1>
+
+        <div class="acciones">
+            <button type="button" (click)="cargarPedidos()" [disabled]="cargando() || pedidoEnProceso() !== null">
+        {{ cargando() ? 'Actualizando…' : 'Actualizar' }}
+      </button>
+
+            <button type="button" (click)="salir()">Cerrar sesión</button>
+        </div>
+    </header>
+
+    @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+    } @if (pedidos().length > 0) {
+    <div class="contenedor-tabla">
+        <table aria-label="Pedidos de cocina">
+            <thead>
+                <tr>
+                    <th scope="col">Pedido</th>
+                    <th scope="col">Alimento</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acción</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (pedido of pedidos(); track pedido.id) {
+                <tr>
+                    <th scope="row">#{{ pedido.id }}</th>
+                    <td>{{ pedido.plato }}</td>
+                    <td>{{ pedido.cantidad }}</td>
+                    <td class="detalle">{{ pedido.observacion || '—' }}</td>
+                    <td>
+                        <span class="estado" [attr.data-estado]="pedido.estado">
+                  {{ nombresEstado[pedido.estado] }}
+                </span>
+                    </td>
+                    <td>
+                        @if (pedido.estado !== 'ListoParaRecoger') {
+                        <button type="button" class="principal" (click)="avanzar(pedido)" [disabled]="cargando() || pedidoEnProceso() !== null">
+                    @if (pedidoEnProceso() === pedido.id) {
+                      Guardando…
+                    } @else {
+                      {{ pedido.estado === 'Recibido' ? 'Empezar a preparar' : 'Marcar como listo' }}
+                    }
+                  </button> } @else { — }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    } @else if (cargando()) {
+    <p role="status">Cargando pedidos…</p>
+    } @else if (!error()) {
+    <p>Todavía no hay pedidos.</p>
+    }
+</main>

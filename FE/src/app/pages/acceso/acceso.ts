@@ -78,12 +78,8 @@ export class Acceso {
 
           this.formulario.controls.password.reset();
 
-          if (this.auth.esCocina()) {
-            this.mensaje.set('Sesión iniciada como cocina.');
-            return;
-          }
-
-          void this.router.navigateByUrl('/nuevo-pedido');
+          const destino = this.auth.esCocina() ? '/cocina' : '/nuevo-pedido';
+          void this.router.navigateByUrl(destino);
         },
         error: (respuesta: HttpErrorResponse) => this.mostrarError(respuesta)
       });
