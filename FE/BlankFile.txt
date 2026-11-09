@@ -1,0 +1,1 @@
+Este archivo se creó en la construcción del proyecto, ya que como la carpeta FE no tenía nada, la forma de que saliera en el git, era añadir cualquier archivo
