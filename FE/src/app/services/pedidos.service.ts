@@ -27,4 +27,10 @@ export class PedidosService {
       headers: { Authorization: `Bearer ${token}` }
     });
   }
+
+  obtenerPedidos(token: string): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(this.url, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
 }

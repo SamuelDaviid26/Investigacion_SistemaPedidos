@@ -1,0 +1,102 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: #faf7f1;
+    color: #28251f;
+    font-family: Arial, sans-serif;
+}
+
+.pagina {
+    max-width: 800px;
+    margin: auto;
+    padding: 24px;
+}
+
+.encabezado,
+.cabecera-tarjeta,
+.acciones {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.encabezado,
+.cabecera-tarjeta {
+    justify-content: space-between;
+}
+
+.encabezado {
+    margin-bottom: 24px;
+}
+
+h1,
+h2,
+p {
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.1rem;
+}
+
+button {
+    padding: 9px 14px;
+    border: 1px solid #c8bdad;
+    border-radius: 8px;
+    background: white;
+    color: #52351e;
+    font: inherit;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.lista {
+    display: grid;
+    gap: 12px;
+}
+
+.tarjeta {
+    padding: 18px;
+    border: 1px solid #ded7cb;
+    border-radius: 12px;
+    background: white;
+}
+
+.estado {
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: #eeeae3;
+    color: #50483c;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.estado[data-estado="EnPreparacion"] {
+    background: #fff0cd;
+    color: #774500;
+}
+
+.estado[data-estado="ListoParaRecoger"] {
+    background: #e1f1df;
+    color: #26552b;
+}
+
+.plato {
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.detalle {
+    margin-top: 6px;
+    overflow-wrap: anywhere;
+}
+
+.error {
+    margin-bottom: 12px;
+    color: #a12620;
+}

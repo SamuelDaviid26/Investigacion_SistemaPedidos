@@ -1,0 +1,41 @@
+<main class="pagina">
+    <header class="encabezado">
+        <h1>Mis pedidos</h1>
+
+        <div class="acciones">
+            <button type="button" (click)="actualizar()" [disabled]="cargando()">
+        {{ cargando() ? 'Actualizando…' : 'Actualizar' }}
+      </button>
+
+            <button type="button" (click)="salir()">Cerrar sesión</button>
+        </div>
+    </header>
+
+    @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+    } @if (pedidos().length > 0) {
+    <section class="lista" aria-label="Pedidos del cliente" [attr.aria-busy]="cargando()">
+        @for (pedido of pedidos(); track pedido.id) {
+        <article class="tarjeta">
+            <div class="cabecera-tarjeta">
+                <h2>Pedido #{{ pedido.id }}</h2>
+
+                <span class="estado" [attr.data-estado]="pedido.estado">
+              {{ nombresEstado[pedido.estado] }}
+            </span>
+            </div>
+
+            <p class="plato">{{ pedido.cantidad }} × {{ pedido.plato }}</p>
+
+            @if (pedido.observacion) {
+            <p class="detalle"><strong>Detalle:</strong> {{ pedido.observacion }}</p>
+            }
+        </article>
+        }
+    </section>
+    } @else if (cargando()) {
+    <p role="status">Cargando tus pedidos…</p>
+    } @else if (!error()) {
+    <p>Todavía no tenés pedidos. Podés hacer el primero en «Nuevo pedido».</p>
+    }
+</main>
