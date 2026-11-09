@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
@@ -13,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class Acceso {
   private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
 
   readonly esRegistro = signal(false);
@@ -75,7 +77,13 @@ export class Acceso {
           }
 
           this.formulario.controls.password.reset();
-          this.mensaje.set(`Sesión iniciada como ${credenciales.username}.`);
+
+          if (this.auth.esCocina()) {
+            this.mensaje.set('Sesión iniciada como cocina.');
+            return;
+          }
+
+          void this.router.navigateByUrl('/nuevo-pedido');
         },
         error: (respuesta: HttpErrorResponse) => this.mostrarError(respuesta)
       });

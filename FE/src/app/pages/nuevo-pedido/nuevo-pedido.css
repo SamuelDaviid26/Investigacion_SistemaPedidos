@@ -1,0 +1,145 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: #faf7f1;
+    color: #28251f;
+    font-family: Arial, sans-serif;
+}
+
+.pagina {
+    max-width: 1100px;
+    margin: auto;
+    padding: 24px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+h1,
+h2,
+.plato {
+    margin: 0;
+}
+
+.contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+    align-items: start;
+    gap: 24px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.alimento,
+.detalle,
+.secundario {
+    background: white;
+    border: 1px solid #d4cabb;
+    border-radius: 10px;
+}
+
+.alimento {
+    padding: 0;
+    overflow: hidden;
+    color: inherit;
+    text-align: left;
+}
+
+.alimento[aria-pressed="true"] {
+    outline: 3px solid #884716;
+    outline-offset: -3px;
+}
+
+.alimento img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.alimento span {
+    display: block;
+    padding: 12px;
+    font-weight: 600;
+}
+
+.detalle {
+    padding: 20px;
+}
+
+.plato {
+    margin: 12px 0;
+    color: #784117;
+    font-weight: bold;
+}
+
+form {
+    display: grid;
+    gap: 8px;
+}
+
+input,
+textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #a69e90;
+    border-radius: 6px;
+}
+
+.secundario,
+.principal {
+    padding: 10px 14px;
+}
+
+.principal {
+    margin-top: 6px;
+    border: 0;
+    border-radius: 6px;
+    background: #784117;
+    color: white;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.confirmacion {
+    padding: 12px;
+    background: #e8f2e6;
+    color: #214f2c;
+}
+
+[role="alert"],
+small {
+    color: #a12620;
+}
+
+@media (max-width: 700px) {
+    .contenido {
+        grid-template-columns: 1fr;
+    }
+    .pagina {
+        padding: 16px;
+    }
+}

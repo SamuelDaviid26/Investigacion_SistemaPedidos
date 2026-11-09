@@ -1,0 +1,53 @@
+<main class="pagina">
+    <header>
+        <h1>Nuevo pedido</h1>
+        <button type="button" class="secundario" (click)="salir()">Cerrar sesión</button>
+    </header>
+
+    @if (confirmacion()) {
+    <p class="confirmacion" role="status">{{ confirmacion() }}</p>
+    } @if (cargando()) {
+    <p role="status">Cargando menú…</p>
+    } @else if (errorMenu()) {
+    <p role="alert">{{ errorMenu() }}</p>
+    <button type="button" class="secundario" (click)="cargarMenu()">Reintentar</button> } @else if (!alimentos().length) {
+    <p>El menú todavía no tiene alimentos.</p>
+    } @else {
+    <div class="contenido">
+        <section class="menu" aria-label="Alimentos del menú">
+            @for (alimento of alimentos(); track alimento.id) {
+            <button type="button" class="alimento" [attr.aria-pressed]="seleccionado()?.id === alimento.id" [disabled]="enviando()" (click)="seleccionar(alimento)">
+            @if (fotos[alimento.id]; as foto) {
+              <img [src]="foto" alt="" />
+            }
+            <span>{{ alimento.nombre }}</span>
+          </button> }
+        </section>
+
+        <section class="detalle" aria-labelledby="titulo-detalle">
+            <h2 id="titulo-detalle">Tu pedido</h2>
+
+            @if (seleccionado(); as alimento) {
+            <p class="plato">{{ alimento.nombre }}</p>
+
+            <form [formGroup]="formulario" (ngSubmit)="enviarPedido()">
+                <label for="cantidad">Cantidad</label>
+                <input id="cantidad" type="number" min="1" step="1" formControlName="cantidad" /> @if (formulario.controls.cantidad.invalid) {
+                <small>Ingresá una cantidad entera mayor que cero.</small> }
+
+                <label for="observacion">Detalle (opcional)</label>
+                <textarea id="observacion" rows="3" maxlength="1000" placeholder="Por ejemplo, sin cebolla" formControlName="observacion"></textarea> @if (errorPedido()) {
+                <p role="alert">{{ errorPedido() }}</p>
+                }
+
+                <button type="submit" class="principal" [disabled]="enviando() || formulario.invalid">
+              {{ enviando() ? 'Enviando…' : 'Enviar pedido' }}
+            </button>
+            </form>
+            } @else {
+            <p>Elegí un alimento del menú.</p>
+            }
+        </section>
+    </div>
+    }
+</main>
