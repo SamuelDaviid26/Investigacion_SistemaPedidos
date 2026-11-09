@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 interface Credenciales {
   username: string;
@@ -20,11 +20,25 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly url = 'http://localhost:5289/api/auth';
 
+  private token: string | null = null;
+
   iniciarSesion(credenciales: Credenciales): Observable<RespuestaLogin> {
-    return this.http.post<RespuestaLogin>(`${this.url}/login`, credenciales);
+    return this.http.post<RespuestaLogin>(`${this.url}/login`, credenciales).pipe(
+      tap(respuesta => {
+        this.token = respuesta.token;
+      })
+    );
   }
 
   registrar(credenciales: Credenciales): Observable<RespuestaRegistro> {
     return this.http.post<RespuestaRegistro>(`${this.url}/register`, credenciales);
+  }
+
+  obtenerToken(): string | null {
+    return this.token;
+  }
+
+  cerrarSesion(): void {
+    this.token = null;
   }
 }
