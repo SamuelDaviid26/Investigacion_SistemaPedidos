@@ -15,7 +15,9 @@ namespace TodoApi.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
 
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public AuthController(
+            UserManager<IdentityUser> userManager,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
@@ -30,25 +32,39 @@ namespace TodoApi.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors.Select(e => e.Description));
 
-            return StatusCode(StatusCodes.Status201Created, new { message = "User created successfully" });
+            return StatusCode(
+                StatusCodes.Status201Created,
+                new { message = "User created successfully" });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(Credentials credentials)
         {
             var user = await _userManager.FindByNameAsync(credentials.Username);
+
             if (user == null || !await _userManager.CheckPasswordAsync(user, credentials.Password))
                 return Unauthorized("Invalid username or password.");
 
-            var jwtSettings = _configuration.GetSection("Jwt");
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
-            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName!)
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var signingKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
+
+            var signingCredentials = new SigningCredentials(
+                signingKey,
+                SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: jwtSettings["Issuer"],

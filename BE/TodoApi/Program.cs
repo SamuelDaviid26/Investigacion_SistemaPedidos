@@ -16,6 +16,7 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LabConnection")));
 
 builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>() //Se agrega soporte para roles
     .AddEntityFrameworkStores<TodoDbContext>();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
