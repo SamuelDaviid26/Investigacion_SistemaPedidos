@@ -220,6 +220,69 @@ namespace TodoApi.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("TodoApi.Models.Alimento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("Alimentos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Fresco"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Hamburguesa"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nombre = "Helado"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nombre = "Hot dog"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Nombre = "Milkshake"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Nombre = "Papas"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Nombre = "Pollo"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Nombre = "Sándwich"
+                        });
+                });
+
             modelBuilder.Entity("TodoApi.Models.Pedido", b =>
                 {
                     b.Property<int>("Id")
