@@ -7,11 +7,11 @@ namespace TodoApi.Data
 {
     public class TodoDbContext : IdentityDbContext<IdentityUser>
     {
-        public TodoDbContext(DbContextOptions<TodoDbContext> options) : base(options)
+        public TodoDbContext(DbContextOptions<TodoDbContext> options)
+            : base(options)
         {
         }
 
-        public DbSet<TodoItem> TodoItems => Set<TodoItem>();
-        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Pedido> Pedidos => Set<Pedido>();
     }
 }
