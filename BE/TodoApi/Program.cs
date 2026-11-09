@@ -13,7 +13,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddDbContext<TodoDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LabConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HomeConnection")));
 
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>() //Se agrega soporte para roles
