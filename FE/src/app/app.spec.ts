@@ -1,24 +1,18 @@
+import { provideHttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { expect, it } from 'vitest';
+import { routes } from './app.routes';
 
-describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-    })
-      .compileComponents();
+it('muestra el formulario de acceso al abrir la aplicación', async () => {
+  TestBed.configureTestingModule({
+    providers: [provideRouter(routes), provideHttpClient()]
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  const navegador = await RouterTestingHarness.create('/');
+  const pantalla = navegador.routeNativeElement;
 
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, sistema-pedidos');
-  });
+  expect(pantalla?.querySelector('h1')?.textContent?.trim()).toBe('Iniciar sesión');
+  expect(pantalla?.querySelector('input[type="password"]')).toBeTruthy();
 });

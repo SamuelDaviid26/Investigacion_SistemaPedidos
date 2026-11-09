@@ -1,0 +1,94 @@
+:host {
+    display: block;
+    font-family: Arial, sans-serif;
+    color: #28251f;
+}
+
+.pagina {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    padding: 24px;
+    background: #faf7f1;
+}
+
+.tarjeta {
+    width: min(100%, 380px);
+    box-sizing: border-box;
+    padding: 32px;
+    border: 1px solid #ded7cb;
+    border-radius: 16px;
+    background: white;
+}
+
+.nombre-app {
+    margin: 0 0 8px;
+    color: #805026;
+    font-size: 0.95rem;
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-size: 2rem;
+}
+
+form {
+    display: grid;
+    gap: 8px;
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    min-width: 0;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid #a69e90;
+    border-radius: 6px;
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    font: inherit;
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.principal {
+    padding: 12px;
+    border: 0;
+    border-radius: 6px;
+    background: #784117;
+    color: white;
+    font-weight: 600;
+}
+
+.alternar {
+    display: block;
+    margin: 18px auto 0;
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: #784117;
+    text-decoration: underline;
+}
+
+.error,
+.mensaje {
+    margin: 0 0 8px;
+}
+
+.error {
+    color: #a12620;
+}
+
+.mensaje {
+    color: #24623c;
+}

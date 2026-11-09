@@ -1,0 +1,29 @@
+<main class="pagina">
+    <section class="tarjeta" aria-labelledby="titulo-acceso">
+        <p class="nombre-app">Sistema de pedidos</p>
+
+        <h1 id="titulo-acceso">
+            {{ esRegistro() ? 'Crear cuenta' : 'Iniciar sesión' }}
+        </h1>
+
+        <form [formGroup]="formulario" (ngSubmit)="enviar()">
+            <label for="usuario">Usuario</label>
+            <input id="usuario" type="text" formControlName="username" autocomplete="username" />
+
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" type="password" formControlName="password" [attr.autocomplete]="esRegistro() ? 'new-password' : 'current-password'" /> @if (error()) {
+            <p class="error" role="alert">{{ error() }}</p>
+            } @if (mensaje()) {
+            <p class="mensaje" role="status">{{ mensaje() }}</p>
+            }
+
+            <button class="principal" type="submit" [disabled]="enviando()">
+        {{ enviando() ? 'Enviando…' : (esRegistro() ? 'Crear cuenta' : 'Iniciar sesión') }}
+      </button>
+        </form>
+
+        <button class="alternar" type="button" [disabled]="enviando()" (click)="cambiarModo()">
+      {{ esRegistro() ? 'Ya tengo cuenta · Iniciar sesión' : 'Crear una cuenta' }}
+    </button>
+    </section>
+</main>
