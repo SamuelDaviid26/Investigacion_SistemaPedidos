@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TodoApi.Data;
-using TodoApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,10 +47,6 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
-
-builder.Services.AddScoped<INotifier, LogNotifier>();
-builder.Services.AddScoped<OverdueNotificationService>();
-builder.Services.AddHostedService<OverdueCheckBackgroundService>();
 
 var app = builder.Build();
 
