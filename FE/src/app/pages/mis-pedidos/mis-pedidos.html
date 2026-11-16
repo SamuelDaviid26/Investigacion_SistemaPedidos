@@ -16,7 +16,7 @@
     } @if (pedidos().length > 0) {
     <section class="lista" aria-label="Pedidos del cliente" [attr.aria-busy]="cargando()">
         @for (pedido of pedidos(); track pedido.id) {
-        <article class="tarjeta">
+        <article class="tarjeta" data-testid="pedido">
             <div class="cabecera-tarjeta">
                 <h2>Pedido #{{ pedido.id }}</h2>
 

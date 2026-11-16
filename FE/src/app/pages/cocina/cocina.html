@@ -29,7 +29,7 @@
 
             <tbody>
                 @for (pedido of pedidos(); track pedido.id) {
-                <tr>
+                <tr data-testid="pedido">
                     <th scope="row">#{{ pedido.id }}</th>
                     <td>{{ pedido.plato }}</td>
                     <td>{{ pedido.cantidad }}</td>
