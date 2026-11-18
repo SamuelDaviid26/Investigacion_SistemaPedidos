@@ -114,6 +114,13 @@ describe('MisPedidosPagina', () => {
     expect(pantalla.textContent).not.toContain('Todavía no tenés pedidos.');
   });
 
+  it('muestra el mensaje de error estándar cuando la red falla por completo (status 0)', () => {
+    crearComponente(errorHttp(0));
+
+    expect(textoDe(pantalla, '[role="alert"]'))
+      .toBe('No se pudieron actualizar tus pedidos. Intentá de nuevo.');
+  });
+
   it('cierra la sesión si la API responde 401', () => {
     crearComponente(errorHttp(401));
 
