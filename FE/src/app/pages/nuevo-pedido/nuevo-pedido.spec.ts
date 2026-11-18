@@ -180,6 +180,28 @@ describe('NuevoPedidoPagina', () => {
       }
     );
 
+    it('deshabilita el envío si la observación supera los 1000 caracteres', () => {
+        elegir('Papas');
+        escribir(
+          pantalla.querySelector<HTMLTextAreaElement>('#observacion')!,
+          'a'.repeat(1001)
+        );
+        fixture.detectChanges();
+
+        expect(pantalla.querySelector<HTMLButtonElement>('button.principal')!.disabled).toBe(true);
+        enviar();
+        expect(pedidos.crear).not.toHaveBeenCalled();
+      });
+
+      it('muestra un mensaje de error cuando la API falla con estado 0', () => {
+        pedidos.crear.mockReturnValue(errorHttp(0));
+
+        elegir('Papas');
+        enviar();
+
+        expect(textoDe(pantalla, '[role="alert"]')).toBe('No se pudo enviar el pedido.');
+      });
+
     it('no envía nada si no se eligió un alimento', () => {
       pantalla.dispatchEvent(new Event('submit'));
       fixture.componentInstance.enviarPedido();
