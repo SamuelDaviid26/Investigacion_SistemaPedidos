@@ -65,9 +65,15 @@
           },
           "defaultConfiguration": "development"
         },
-        "test": {
-          "builder": "@angular/build:unit-test"
-        }
+      "test": {
+      "builder": "@angular/build:unit-test",
+      "options": {
+        "coverage": true,
+        "coverageReporters": ["html", "text"],
+        "coverageExclude": ["src/app/testing/**"],
+        "coverageThresholds": { "statements": 95, "branches": 90, "functions": 95 }
+  }
+}
       }
     }
   }
